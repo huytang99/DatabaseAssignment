@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Question</title>
+    <link rel="stylesheet" href="http://localhost/thanhhuynhtan.com/css/4_login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .block {
+            position: absolute;
+            z-index: -999;
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        fieldset {
+            height: auto;
+            width: auto;
+            margin: 20px 0 20px 0;
+            border: 2px solid #000;
+            font-size: 30px;
+        }
+        
+        .question {
+            height: 50px;
+            width: 1000px;
+            border: 1px solid #000;
+            font-size: 30px;
+        }
+        
+        .answer {
+            height: 50px;
+            width: 700px;
+            border: 1px solid #000;
+            font-size: 30px;
+        }
+        
+        .row {
+            display: flex;
+            grid-template-columns: auto auto;
+            align-items: center;
+            justify-content: start;
+            grid-gap: 20px;
+        }
+        
+        .answertext {
+            width: 130px;
+            text-align: left;
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        function submit() {
+            var checkanswer;
+            if (document.getElementById('Answer1check').checked) {
+                checkanswer = 1;
+            } else if (document.getElementById('Answer2check').checked) {
+                checkanswer = 2;
+            } else if (document.getElementById('Answer3check').checked) {
+                checkanswer = 3;
+            } else if (document.getElementById('Answer4check').checked) {
+                checkanswer = 4;
+            }
+
+            var formData = new FormData();
+            formData.append("testid", document.getElementById("testid").value);
+            formData.append("question", document.getElementById("question").value);
+            formData.append("answer1", document.getElementById("Answer1").value);
+            formData.append("answer2", document.getElementById("Answer2").value);
+            formData.append("answer3", document.getElementById("Answer3").value);
+            formData.append("answer4", document.getElementById("Answer4").value);
+            formData.append("correctanswer", checkanswer);
+
+            // Normal syntax
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("phpanswer").innerHTML = this.responseText;
+                }
+            };
+            xhttp.open("POST", "../phpFile/add_question.php", true);
+            xhttp.send(formData);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="block">
+        <fieldset>
+            <legend>Add Question</legend>
+            <div>
+                <p>Test ID</p>
+                <input class="question" id="testid" type="text"></input>
+            </div>
+            <div>
+                <p>Question</p>
+                <input class="question" id="question" type="text"></input>
+            </div>
+            <div class="row">
+                <p class="answertext">Answer 1: </p>
+                <input class="answer" id="Answer1" type="text"></input>
+                <input type="radio" id="Answer1check" name="question1check" type="checkbox" value="1" checked="true"></input>
+            </div>
+            <div class="row">
+                <p class="answertext">Answer 2: </p>
+                <input class="answer" id="Answer2" type="text"></input>
+                <input type="radio" id="Answer2check" name="question1check" type="checkbox" value="2"></input>
+            </div>
+            <div class="row">
+                <p class="answertext">Answer 3: </p>
+                <input class="answer" id="Answer3" type="text"></input>
+                <input type="radio" id="Answer3check" name="question1check" type="checkbox" value="3"></input>
+            </div>
+            <div class="row">
+                <p class="answertext">Answer 4: </p>
+                <input class="answer" id="Answer4" type="text"></input>
+                <input type="radio" id="Answer4check" name="question1check" type="checkbox" value="4"></input>
+            </div>
+            <p id="phpanswer" style="color: red;" value="aa"></p>
+            <button id="SubmitButton" onclick="submit()">Submit</button>
+        </fieldset>
+    </div>
+</body>
+
+</html>

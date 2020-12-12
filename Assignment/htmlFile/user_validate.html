@@ -38,6 +38,7 @@
       return;
     }
 
+    user_type = user_type == 0 ? teacherType : studentType;
     // Convert information to JSON
     var formData = new FormData();
     formData.append("user_type", user_type);
@@ -54,14 +55,20 @@
 
         if (response['status_code'] == userNotExist) {
           // Redirect to register page
-
-          user_type == 0
+          user_type == teacherType
             ? window.location.href = '../phpFile/index.php?page=teacher_register'
             : window.location.href = '../phpFile/index.php?page=student_register';
+
         }
         else {
           // Redirect to login page
-          window.location.href = '../phpFile/index.php?page=login';
+          console.log(user_type + response['role']);
+          debugger;
+          if (user_type == response['role'])
+            window.location.href = '../phpFile/index.php?page=login';
+          else
+            document.getElementById("errorOutput").innerHTML =
+              response['role'] == teacherType ? "This is teacher username" : "This is student username";
         }
 
       }

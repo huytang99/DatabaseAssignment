@@ -52,6 +52,14 @@
         };
 
     }
+
+    function takeTest(){
+        window.location.href = '../phpFile/index.php?page=take_test';
+    }
+
+    function searchTest(){
+        window.location.href = '../phpFile/index.php?page=search_test';
+    }
 </script>
 
 <body>
@@ -64,8 +72,8 @@
 
         <div class="sizedBox1"></div>
 
-        <button class="buttonCustom" id="submit" type="submit">Test</button>
-        <button class="buttonCustom" id="submit" type="submit">Result</button>
+        <button class="buttonCustom" onclick="takeTest()">Take Test In A Lazy Way</button>
+        <button class="buttonCustom" onclick="searchTest()">Search Result</button>
     </div>
 </body>
 

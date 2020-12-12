@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Test</title>
+    <style>
+        .block {
+            position: absolute;
+            z-index: -999;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+        }
+        
+        .inner_block {
+            display: grid;
+            border: 2px solid #000;
+            font-size: 30px;
+            grid-template-columns: auto auto auto auto auto;
+        }
+        
+        .inner_block div {
+            padding: 5px 50px 5px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #000;
+        }
+        
+        .question {
+            height: 50px;
+            width: 500px;
+            border: 1px solid #000;
+            font-size: 30px;
+        }
+        
+        .row {
+            margin-left: 50px;
+            display: flex;
+            grid-template-columns: auto auto;
+            align-items: center;
+            justify-content: start;
+            grid-gap: 20px;
+        }
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script>
+        function searchStudent() {
+            var header = "<div><p>ID</p></div><div><p>Date</p></div><div><p>Test ID</p></div><div><p>Score</p></div><div><p>Duration</p></div>";
+            var name = $('#name').val();
+            $.ajax({
+                type: "POST",
+                url: "../phpFile/search_test.php",
+                data: {
+                    name: name,
+                },
+                success: function(html) {
+                    $("#result").html(header + html).show();
+                }
+
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="block">
+        <div class="row">
+            <p style="font-size: 30px;">Input student username</p>
+            <input class="question" id="name" type="text"></input>
+            <button id="SubmitButton" onclick="searchStudent()">Submit</button>
+        </div>
+        <br>
+        <div id="result" class="inner_block">
+
+        </div>
+    </div>
+</body>
+
+</html>

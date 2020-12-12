@@ -64,6 +64,20 @@
         };
 
     }
+
+    function addQuestion(){
+        window.location.href = '../phpFile/index.php?page=add_question';
+    }
+
+    function searchQuestion(){
+        window.location.href = '../phpFile/index.php?page=search_question';
+    }
+
+    function searchTest(){
+        window.location.href = '../phpFile/index.php?page=search_test';
+    }
+
+
 </script>
 
 <body>
@@ -76,8 +90,9 @@
 
         <div class="sizedBox1"></div>
 
-        <button class="buttonCustom" id="submit" type="submit">Test</button>
-        <button class="buttonCustom" id="submit" type="submit">Result</button>
+        <button class="buttonCustom" onclick="addQuestion()">Add Question</button>
+        <button class="buttonCustom" onclick="searchQuestion()">Search Question</button>
+        <button class="buttonCustom" onclick="searchTest()">Search Test</button>
     </div>
 </body>
 

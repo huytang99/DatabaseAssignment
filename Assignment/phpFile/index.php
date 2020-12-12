@@ -21,6 +21,18 @@ if (isset($_GET['page'])) {
         case "student_page":
             include "../htmlFile/student_page.html";
             return;
+        case "add_question":
+            include "../htmlFile/add_question.html";
+            return;
+        case "search_question":
+            include "../htmlFile/search_question.html";
+            return;
+        case "search_test":
+            include "../htmlFile/search_test.html";
+            return;
+        case "take_test":
+            include "../htmlFile/take_test.html";
+            return;
         default:
             include "";
             return;

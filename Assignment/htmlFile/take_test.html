@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Test</title>
+    <link rel="stylesheet" href="http://localhost/thanhhuynhtan.com/css/4_login.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .block {
+            position: absolute;
+            z-index: -999;
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        fieldset {
+            height: auto;
+            width: auto;
+            margin: 20px 0 20px 0;
+            border: 2px solid #000;
+            font-size: 30px;
+        }
+        
+        .question {
+            height: 50px;
+            width: 1000px;
+            border: 1px solid #000;
+            font-size: 30px;
+        }
+        
+        .answer {
+            height: 50px;
+            width: 700px;
+            border: 1px solid #000;
+            font-size: 30px;
+        }
+        
+        .row {
+            display: flex;
+            grid-template-columns: auto auto;
+            align-items: center;
+            justify-content: start;
+            grid-gap: 20px;
+        }
+        
+        .answertext {
+            width: 130px;
+            text-align: left;
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        function submit() {
+            var formData = new FormData();
+            formData.append("testid", document.getElementById("testid").value);
+            formData.append("studentname", document.getElementById("studentname").value);
+            formData.append("answer", document.getElementById("answer").value);
+
+            // Normal syntax
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("phpanswer").innerHTML = "Final Score = " + this.responseText;
+                }
+            };
+            xhttp.open("POST", "../phpFile/take_test.php", true);
+            xhttp.send(formData);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="block">
+        <fieldset>
+            <legend>Test for lazy</legend>
+            <div class="row">
+                <p>Test ID</p>
+                <input class="question" id="testid" type="text"></input>
+            </div>
+            <div class="row">
+                <p>Student ID</p>
+                <input class="question" id="studentname" type="text"></input>
+            </div>
+            <div class="row">
+                <p class="answertext">One for all</p>
+                <input class="answer" id="answer" type="number"></input>
+            </div>
+            <p id="phpanswer" style="color: red;" value="aa"></p>
+            <button id="SubmitButton" onclick="submit()">Submit</button>
+        </fieldset>
+    </div>
+</body>
+
+</html>
