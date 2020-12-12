@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2020 at 01:03 PM
+-- Generation Time: Dec 12, 2020 at 04:08 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -416,7 +416,8 @@ ALTER TABLE `teacher`
   ADD PRIMARY KEY (`Username`),
   ADD UNIQUE KEY `PhoneNumber` (`PhoneNumber`),
   ADD UNIQUE KEY `IdentityNumber` (`IdentityNumber`),
-  ADD UNIQUE KEY `Email` (`Email`);
+  ADD UNIQUE KEY `Email` (`Email`),
+  ADD KEY `tc` (`FullName`);
 
 --
 -- Indexes for table `teacher_backup`
