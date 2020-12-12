@@ -1,0 +1,77 @@
+
+.buttonCustom{
+    /* Button shape */
+    background-color: white;
+    width: 100px;
+    height: 50px;
+    border-color: brown;    
+    border-radius: 15px;
+    border-width: 3px;
+}
+
+/* The border of registration form */
+
+fieldset {
+    background-color: white;
+    border-style: solid;
+    border-color: brown;
+    border-width: 3px;
+    width: 325px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    
+}
+
+legend {
+    font-weight: bold;
+    font-size: 21px;
+}
+/* Block around text field and button */
+
+.smallcontainer {
+    height: 35px;
+    width: 325px;
+}
+
+/* Title of the input box */
+
+.title {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    font-weight: bold;
+}
+
+.errortext{
+    color: red;
+    font-weight: bold;
+}
+
+.valueText {
+    display: inline-block;
+    height: 100px;
+    font-weight: bold;
+}
+
+/* Text field input box */
+
+.inputBox {
+    display: inline-block;
+    width: 190px;
+}
+
+.optionBox {
+    width: 325px;
+}
+
+.sizedBox1{
+    height: 20px;
+    width: 325px;
+}
+
+.sizedBox2{
+    height: 20px;
+    width: 10px;
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../cssFile/homepage.css" />
+    <title>Student Register</title>
+</head>
+
+<script src='../jsFile/const.js'></script>
+<script>
+
+    // Get username from username input in phone_validate page
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("get", "../phpFile/student_register.php", true);
+    xhttp.send();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            // Show the username to user
+            var username = JSON.parse(this.responseText)['username'];
+            document.getElementById("username").innerHTML = username;
+        }
+    };
+
+    function registerUser() {
+        //Stop page reloading automatically
+        event.preventDefault();
+
+        // Get information from patient
+        var password = document.getElementById("password").value;
+        var fullname = document.getElementById("fullname").value;
+        var email = document.getElementById("email").value;
+
+        // Convert information to JSON
+        var formData = new FormData();
+        formData.append("password", password);
+        formData.append("fullname", fullname);
+        formData.append("email", email);
+
+        // Ajax to receive and send data to server
+        xhttp.open("POST", "../phpFile/student_register.php", true);
+        xhttp.send(formData);
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                // Handle response text
+                var response = JSON.parse(this.responseText);
+                if (response['status_code'] == notEnoughInfo) {
+                    document.getElementById("errorOutput").innerHTML = "Please fill all infomation";
+                }
+                else if (response['status_code'] == failToAdd) {
+                    console.log("Sql Error: " + "\n" + response['error']);
+                }
+                else {
+                    window.location.href = '../phpFile/index.php?page=login';
+                }
+            }
+        };
+    }
+</script>
+
+<body>
+    <div>
+        <fieldset>
+            <legend>Student Registration Form</legend>
+            <div class="sizedBox1"></div>
+            <form onsubmit="registerUser()">
+                <!-- Input box for username -->
+                <div class="smallcontainer">
+                    <div class="title">Username:</div>
+                    <div class="valueText" id='username'> Loading... </div>
+                </div>
+
+                <!-- Input box for password -->
+                <div class="smallcontainer">
+                    <div class="title">Password:</div>
+                    <div class="inputBox">
+                        <input type="text" id="password" />
+                    </div>
+                </div>
+
+                <!-- Input box for full name -->
+                <div class="smallcontainer">
+                    <div class="title">Full Name:</div>
+                    <div class="inputBox">
+                        <input type="text" id="fullname" />
+                    </div>
+                </div>
+
+                <!-- Input box for email -->
+                <!-- <div class="smallcontainer">
+                    <div class="title">School:</div>
+                    <div class="inputBox">
+                        <input type="text" id="School" />
+                    </div>
+                </div> -->
+
+                <!-- Input box for email -->
+                <div class="smallcontainer">
+                    <div class="title">Email:</div>
+                    <div class="inputBox">
+                        <input type="text" id="email" />
+                    </div>
+                </div>
+
+
+
+                <!-- Show error if user does not provide enough information -->
+                <center>
+                    <div class="errortext" id='errorOutput'></div>
+                </center>
+
+                <div class="sizedBox1"></div>
+
+                <!-- Button register -->
+                <center>
+                    <button class="buttonRegister" id="submit" type="submit">Finish</button>
+                </center>
+            </form>
+        </fieldset>
+    </div>
+    <!-- <div class="smallcontainer" id="output" style="text-decoration-color: brown"></div> -->
+</body>
+
+</html>

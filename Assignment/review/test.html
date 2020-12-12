@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<script>
+    function getReview() {
+        var formData = new FormData();
+        formData.append("doctor_id", 1);
+
+        // Normal syntax
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+        };
+        xhttp.open("POST", "../ASS1/get_review.php", true);
+        xhttp.send(formData);
+    }
+
+    function writeReview() {
+        var formData = new FormData();
+        formData.append("doctor_id", 2);
+        formData.append("reviewer_id", 1);
+        formData.append("content", "This is a new review");
+
+        // Normal syntax
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+            }
+        };
+        xhttp.open("POST", "../ASS1/write_review.php", true);
+        xhttp.send(formData);
+    }
+</script>
+
+<body>
+    <div>
+        <button onclick="getReview()">Get Review</button>
+        <button onclick="writeReview()">Write Review</button>
+    </div>
+</body>
+
+</html>

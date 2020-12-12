@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../cssFile/user_validate.css" />
+  <title>User Validation</title>
+</head>
+
+<script src='../jsFile/const.js'></script>
+<script>
+  function registerUser() {
+    //Stop page reloading
+    event.preventDefault();
+
+    // Get username
+    var username = document.getElementById("username").value;
+    if (username == '') {
+      document.getElementById("errorOutput").innerHTML = "Input username";
+      return;
+    }
+
+
+    // Get information from input
+    // Loop to get value from radio option
+    var user_type = -1;
+    var optionSelect = document.getElementsByName("user_type");
+    for (var i = 0, length = optionSelect.length; i < length; i++) {
+      if (optionSelect[i].checked) {
+        user_type = optionSelect[i].value;
+        break;
+      }
+    }
+
+    if (user_type == -1) {
+      document.getElementById("errorOutput").innerHTML = "Choose your role";
+      return;
+    }
+
+    // Convert information to JSON
+    var formData = new FormData();
+    formData.append("user_type", user_type);
+    formData.append("username", username);
+
+    // Ajax to send username to server
+    // Server validates the username and send back response for front end
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+
+        //Locate to suitable register page for user
+        var response = JSON.parse(this.responseText);
+
+        if (response['status_code'] == userNotExist) {
+          // Redirect to register page
+
+          user_type == 0
+            ? window.location.href = '../phpFile/index.php?page=teacher_register'
+            : window.location.href = '../phpFile/index.php?page=student_register';
+        }
+        else {
+          // Redirect to login page
+          window.location.href = '../phpFile/index.php?page=login';
+        }
+
+      }
+    };
+    xhttp.open("POST", '../phpFile/user_validate.php', true);
+    xhttp.send(formData);
+  }
+</script>
+
+<body>
+  <div>
+    <fieldset>
+      <legend>Welcome</legend>
+      <div class="sizedBox1"></div>
+      <form onsubmit="registerUser()">
+        <!-- Input box for username -->
+        <div class="smallcontainer">
+          <div class="title">Username:</div>
+          <div class="inputBox">
+            <input type="text" id="username" />
+          </div>
+        </div>
+
+        <!-- Option box for user role -->
+        <div class="optionBox" style="height: 30px">
+          <!-- Title -->
+          <div class="title">
+            <label for="userType">Role:</label>
+          </div>
+
+          <!-- Options -->
+          <div style="display: inline-block">
+            <input type="radio" value=0 id="userTypeS" name="user_type">Teacher</input>
+            <input type="radio" value=1 id="userTypeS" name="user_type">Student</input>
+          </div>
+
+        </div>
+
+        <!-- Show error if user does not provide enough information -->
+        <center style="padding-bottom: 10px; padding-top: 20px;">
+          <div class="errortext" id='errorOutput'></div>
+        </center>
+
+        <div class="sizedBox1"></div>
+
+        <!-- Button register -->
+        <center>
+          <button class="buttonAccess" id="submit" type="submit">Access</button>
+        </center>
+
+      </form>
+    </fieldset>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../cssFile/teacher_register.css" />
+  <title>Teacher Register</title>
+</head>
+
+<script src='../jsFile/const.js'></script>
+<script>
+
+  //Get doctor username and show to front end
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("get", "../phpFile/teacher_register.php", true);
+  xhttp.send();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var username = JSON.parse(this.responseText)['username'];
+      document.getElementById("username").innerHTML = username;
+    }
+  };
+
+  function registerUser() {
+    //Stop page reloading
+    event.preventDefault();
+
+
+    // Get information from input
+    var password = document.getElementById("password").value;
+    var fullname = document.getElementById("fullname").value;
+    var phone_number = document.getElementById("phone_number").value;
+    var email = document.getElementById("email").value;
+    var identifier_number = document.getElementById("identifier_number").value;
+
+
+    // Convert information to JSON
+    var formData = new FormData();
+    formData.append("password", password);
+    formData.append("fullname", fullname);
+    formData.append("phone_number", phone_number);
+    formData.append("email", email);
+    formData.append("identifier_number", identifier_number);
+
+
+    // Normal syntax
+    xhttp.open("POST", "../phpFile/teacher_register.php", true);
+    xhttp.send(formData);
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);
+        debugger;
+
+        // Handle response text
+        try {
+          var response = JSON.parse(this.responseText);
+          if (response['status_code'] == notEnoughInfo) {
+            document.getElementById("errorOutput").innerHTML = "Please fill all infomation";
+          }
+          else if (response['status_code'] == failToAdd) {
+            console.log("Sql Error: " + "\n" + response['error']);
+            document.getElementById("errorOutput").innerHTML = "Check your infomation";
+          }
+          else {
+            window.location.href = '../phpFile/index.php?page=login';
+          }
+        }
+        catch (e) {
+          document.getElementById("errorOutput").innerHTML = "Check your infomation";
+        }
+
+      }
+    };
+
+  }
+</script>
+
+<body>
+  <div>
+    <fieldset>
+      <legend>Teacher Registration Form</legend>
+      <div class="sizedBox"></div>
+      <form onsubmit="registerUser()">
+        <!-- Input box for username -->
+        <div class="smallcontainer">
+          <div class="title">Username:</div>
+          <div class="valueText" id='username'> Loading... </div>
+        </div>
+
+        <!-- Input box for password -->
+        <div class="smallcontainer">
+          <div class="title">Password:</div>
+          <div class="inputBox">
+            <input type="text" id="password" />
+          </div>
+        </div>
+
+        <!-- Input box for full name -->
+        <div class="smallcontainer">
+          <div class="title">Full Name:</div>
+          <div class="inputBox">
+            <input type="text" id="fullname" />
+          </div>
+        </div>
+
+        <!-- Input box for phone number -->
+        <div class="smallcontainer">
+          <div class="title">Phone Number:</div>
+          <div class="inputBox">
+            <input type="text" id="phone_number" />
+          </div>
+        </div>
+
+        <!-- Input box for email -->
+        <div class="smallcontainer">
+          <div class="title">Email:</div>
+          <div class="inputBox">
+            <input type="text" id="email" />
+          </div>
+        </div>
+
+        <!-- Input box for ID number -->
+        <div class="smallcontainer">
+          <div class="title">ID number:</div>
+          <div class="inputBox">
+            <input type="text" id="identifier_number" />
+          </div>
+        </div>
+
+        <!-- Show error if user does not provide enough information -->
+        <center>
+          <div class="errortext" id='errorOutput'></div>
+        </center>
+
+        <div class="sizedBox"></div>
+
+        <!-- Button register -->
+        <center>
+          <button class="buttonRegister" id="submit" type="submit">Finish</button>
+        </center>
+
+      </form>
+
+    </fieldset>
+  </div>
+  <!-- <div class="smallcontainer" id="output" style="text-decoration-color: brown"></div> -->
+</body>
+
+</html>

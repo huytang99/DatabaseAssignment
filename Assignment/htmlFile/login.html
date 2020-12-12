@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../cssFile/login.css" />
+  <title>Document</title>
+</head>
+
+<script src='../jsFile/const.js'></script>
+<script>
+  //Get username and show to front end
+  var user_role;
+  var xhttp = new XMLHttpRequest();
+  xhttp.open("get", "../phpFile/login.php", true);
+  xhttp.send();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(this.responseText);
+      var username = response['username'];
+      user_role = response['user_role'];
+      document.getElementById("username").innerHTML = username;
+    }
+  };
+
+  function loginUser() {
+    //Stop page reloading automatically
+    event.preventDefault();
+
+    // Get input password
+    var password = document.getElementById("password").value;
+
+    // Convert information to JSON
+    var formData = new FormData();
+    formData.append("password", password);
+
+    // Ajax to receive and send data to server
+    xhttp.open("POST", "../phpFile/login.php", true);
+    xhttp.send(formData);
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+
+        // Handle response text
+        var response = JSON.parse(this.responseText);
+        if (response['status_code'] == wrongPassword) {
+          document.getElementById("errorOutput").innerHTML = "Wrong password, Input again!";
+        }
+        else {
+          user_role == teacherType ? window.location.href = '../phpFile/index.php?page=teacher_page' :
+            window.location.href = '../phpFile/index.php?page=student_page';
+        }
+      }
+    };
+  }
+</script>
+
+<body>
+  <div>
+    <fieldset>
+      <legend>Login</legend>
+      <div class="sizedBox1"></div>
+      <form onsubmit="loginUser()">
+        <!-- Input box for username -->
+        <div class="smallcontainer">
+          <div class="title">Username:</div>
+          <div class="valueText" id="username"> Loading... </div>
+        </div>
+
+        <!-- Input box for password -->
+        <div class="smallcontainer">
+          <div class="title">Password:</div>
+          <div class="inputBox">
+            <input type="text" id="password" />
+          </div>
+        </div>
+
+        <!-- Show error if user does not provide enough information -->
+        <center>
+          <div class="errortext" id='errorOutput'></div>
+        </center>
+
+        <div class="sizedBox1"></div>
+
+        <!-- Button register -->
+        <center>
+          <button class="buttonLogin" id="submit" type="submit">Finish</button>
+        </center>
+      </form>
+    </fieldset>
+  </div>
+  <div class="smallcontainer" id="output" style="text-decoration-color: brown"></div>
+</body>
+
+</html>

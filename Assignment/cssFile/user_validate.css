@@ -1,0 +1,74 @@
+/* The border of registration form */
+
+fieldset {
+    background-color: white;
+    border-style: solid;
+    border-color:  violet;
+    border-width: 3px;
+    width: 288px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    
+}
+
+legend {
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+}
+/* Block around text field and button */
+
+.smallcontainer {
+    height: 35px;
+    width: 300px;
+}
+
+/* Title of the input box */
+
+.title {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    font-weight: bold;
+}
+
+.errortext{
+    color: red;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.valueText {
+    display: inline-block;
+    width: 50px;
+    height: 100px;
+    font-weight: bold;
+}
+
+/* Text field input box */
+
+.inputBox {
+    display: inline-block;
+    width: 190px;
+}
+
+.optionBox {
+    width: 325px;
+}
+
+.buttonAccess{
+    /* Button shape */
+    background-color: white;
+    width: 100px;
+    height: 50px;
+    border-color: violet;
+    border-radius: 15px;
+    border-width: 3px;
+}
+
+.sizedBox{
+    height: 50px;
+    width: 325px;
+}

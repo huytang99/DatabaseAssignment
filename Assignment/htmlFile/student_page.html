@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../cssFile/homepage.css" />
+    <title>Homepage</title>
+</head>
+
+<script>
+    var show_info = false;
+
+    function showInfo() {
+        if (show_info) {
+            document.getElementById("user_info").innerHTML = '';
+            show_info = false;
+            return;
+        }
+        show_info = true;
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("get", "../phpFile/user_info.php", true);
+        xhttp.send();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                var response = JSON.parse(this.responseText);
+
+                var username = response['username'];
+                var fullname = response['fullname'];
+                var email = response['email'];
+
+                infoHtml =
+                    '<div class="smallcontainer">' +
+                    '<div class="title">Username:</div>' +
+                    '<div class="valueText" id="username"> Loading... </div>' +
+                    '</div>' +
+                    '<div class="smallcontainer">' +
+                    '<div class="title">Full Name:</div>' +
+                    '<div class="valueText" id="fullname"> Loading... </div>' +
+                    '</div>' +
+                    '<div class="smallcontainer">' +
+                    '<div class="title">Email:</div>' +
+                    '<div class="valueText" id="email"> Loading... </div>' +
+                    '</div>';
+
+                document.getElementById("user_info").innerHTML = infoHtml
+                document.getElementById("username").innerHTML = username;
+                document.getElementById("fullname").innerHTML = fullname;
+                document.getElementById("email").innerHTML = email;
+            }
+        };
+
+    }
+</script>
+
+<body>
+    <div>
+        <button class="buttonCustom" onclick="showInfo()">Info</button>
+
+        <div class="sizedBox1"></div>
+
+        <div id="user_info"></div>
+
+        <div class="sizedBox1"></div>
+
+        <button class="buttonCustom" id="submit" type="submit">Test</button>
+        <button class="buttonCustom" id="submit" type="submit">Result</button>
+    </div>
+</body>
+
+</html>
