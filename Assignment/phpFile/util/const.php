@@ -19,3 +19,6 @@ const couldNotEnterData = 2003;
 // response const for user login
 const wrongPassword = 3000;
 const loginSuccess = 3001;
+
+// Other Error
+const errorO = 5000;

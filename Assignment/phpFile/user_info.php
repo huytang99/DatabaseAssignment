@@ -36,7 +36,7 @@ function getStudentInfo($mysqlConnect, $username)
     if (!$result) {
 
         $json_obj = array(
-            'status_code' => failToAdd,
+            'status_code' => errorO,
             'error' =>  "<br>" . "Error: " . $sqlQuery->error . "<br>",
         );
         $jsonData = json_encode($json_obj);

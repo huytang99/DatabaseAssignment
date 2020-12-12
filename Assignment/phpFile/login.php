@@ -68,8 +68,8 @@ function login(
 ) {
 
     // Prepare and bind
-    $sqlQuery = $mysqlConnect->prepare("SELECT username, password FROM $user_role WHERE username = ?");
-    $sqlQuery->bind_param("s", $username);
+    $sqlQuery = $mysqlConnect->prepare("SELECT * FROM $user_role WHERE username = ? AND password = ?");
+    $sqlQuery->bind_param("ss", $username, $password);
     $sqlQuery->execute();
 
     // Result of SQL query
@@ -80,15 +80,13 @@ function login(
     if (!$result) {
 
         $json_obj = array(
-            'status_code' => failToAdd,
+            'status_code' => errorO,
             'error' =>  "<br>" . "Error: " . $sqlQuery->error . "<br>",
         );
         $jsonData = json_encode($json_obj);
         echo $jsonData;
     } else {
-        $tuple = $result->fetch_assoc();
-
-        if ($password == $tuple['password']) {
+        if ($result->num_rows == 1) {
             $json_obj = array(
                 'status_code' => loginSuccess,
             );
